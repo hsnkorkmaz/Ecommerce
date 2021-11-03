@@ -2,8 +2,8 @@ import react from 'react';
 
 function App() {
   return (
-    <div>
-    Hello from App.js
+    <div className="text-center text-xl">
+      Hello from App.js
     </div>
   );
 }
