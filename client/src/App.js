@@ -1,12 +1,12 @@
 
 import Header from './components/header/Header';
-import { BrowserRouter as Router, Switch, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 // Views
 import About from './views/About';
 import Main from './views/Main';
 import Contact from './views/Contact';
-import Product from './views/Product';
+import Products from './views/Products';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
           <Route exact path="/" element={<Main />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<Contact />} />
-          <Route exact path="/product" element={<Product />} />
+          <Route exact path="/products" element={<Products />} />
         </Routes>
       </div>
     </Router>
