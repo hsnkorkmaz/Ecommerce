@@ -11,6 +11,7 @@ const Header = () => {
                     <Link
                         className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
                         to="/"><span className="ml-2">Logo</span></Link>
+                   <div className="flex">
                     <button
                         className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
                         type="button"
@@ -20,6 +21,7 @@ const Header = () => {
                             </path>
                         </svg>
                     </button>
+                    </div>
                 </div>
                 <div className={"lg:flex flex-grow items-center" + (navbarOpen ? " flex" : " hidden")}>
                     <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
@@ -36,7 +38,7 @@ const Header = () => {
                         <li className="nav-item">
                             <Link
                                 className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                                to="/product" onClick={() => setNavbarOpen(!navbarOpen)}><span className="ml-2">Product</span></Link>
+                                to="/products" onClick={() => setNavbarOpen(!navbarOpen)}><span className="ml-2">Products</span></Link>
                         </li>
                         <li className="nav-item">
                             <Link
