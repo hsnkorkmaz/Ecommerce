@@ -11,7 +11,7 @@ import Products from './views/Products';
 function App() {
   return (
     <Router>
-      <div>
+      <div className="leading-normal tracking-normal" >
         <Header />
         <Routes>
           <Route exact path="/" element={<Main />} />
