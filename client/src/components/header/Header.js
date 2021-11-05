@@ -11,7 +11,7 @@ const Header = () => {
                     <div className="flex">
                         <Link
                             className="text-base font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
-                            to="/"><span className="ml-2">Logo</span></Link>
+                            to="./"><span className="ml-2">Logo</span></Link>
                         <input type="text"
                             placeholder="Search your product"
                             className="bg-white outline-none text-sm focus:outline-none rounded-3xl px-5 ml-4" />
