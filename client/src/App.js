@@ -1,6 +1,6 @@
 
 import Header from './components/header/Header';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { HashRouter as Router, Route, Routes } from 'react-router-dom'
 
 // Views
 import About from './views/About';
