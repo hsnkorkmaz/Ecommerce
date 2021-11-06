@@ -7,10 +7,9 @@ const Main = () => {
         <div style={{ background: "linear-gradient(90deg, #059669 0%, #f4f269 100%)" }}>
             <div className="pt-24 text-white">
                 <div className="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center">
-
                     <div className="flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
                         {/*  <p className="uppercase tracking-loose w-full">?</p> */}
-                        <h1 className="my-4 text-5xl font-bold leading-tight">
+                        <h1 className="my-4 text-5xl font-bold leading-tight w-full">
                             Shop Online
                         </h1>
                         <p className="leading-normal text-2xl mb-8">
@@ -47,7 +46,6 @@ const Main = () => {
             </div>
             <section className="bg-white py-8">
                 <ProductList />
-              
             </section>
     
             <svg viewBox="0 0 1439 147" version="1.1">
