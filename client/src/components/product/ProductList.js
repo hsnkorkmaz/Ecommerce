@@ -11,8 +11,16 @@ const ProductList = () => {
 
     return (
         <div>
-            <div onClick={() => setLeftOpen(!isLeftOpen)} className="md:hidden">
-                <h1>OPEN</h1>
+            <div className="flex justify-evenly md:hidden">
+                <div onClick={() => setLeftOpen(!isLeftOpen)} className="bg-green-600 text-white rounded-2xl p-2 ml-5">
+                    <h1>Categories</h1>
+                </div>
+                <div onClick={() => setLeftOpen(!isLeftOpen)} className="bg-green-600 text-white rounded-2xl p-2 mr-5">
+                    <h1>Filter</h1>
+                </div>
+                <div onClick={() => setLeftOpen(!isLeftOpen)} className="bg-green-600 text-white rounded-2xl p-2 mr-5">
+                    <h1>Sort</h1>
+                </div>
             </div>
             <div className={`transform top-0 left-0 w-full fixed h-full bg-gray-800 opacity-50 z-40 ${!isLeftOpen ? "hidden" : ""}`} onClick={() => setLeftOpen(!isLeftOpen)}>
 
@@ -23,7 +31,7 @@ const ProductList = () => {
                         <h1 className="w-full my-2 sm:text-xl md:text-5xl font-bold leading-tight text-center text-gray-800">
                             Categories
                         </h1>
-                    {/*     <div className="mr-5 md:hidden"  onClick={() => setLeftOpen(!isLeftOpen)}>
+                        {/*     <div className="mr-5 md:hidden"  onClick={() => setLeftOpen(!isLeftOpen)}>
                             X
                         </div> */}
                     </div>
