@@ -5,7 +5,7 @@ const Header = () => {
     const [navbarOpen, setNavbarOpen] = useState(false);
 
     return (
-        <nav className="relative flex flex-wrap items-center justify-between px-2 py-3" style={{ background: "linear-gradient(90deg, #059669 0%, #f4f269 100%)" }}>
+        <nav className="flex flex-wrap items-center justify-between px-2 py-3 sticky top-0 z-40" style={{ background: "linear-gradient(90deg, #059669 0%, #f4f269 100%)" }}>
             <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
                 <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
                     <div className="flex">
