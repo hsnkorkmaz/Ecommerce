@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Data;
 
 namespace api.Controllers
 {
@@ -11,6 +12,12 @@ namespace api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly IUserRepository _repository;
+
+        public AuthController(IUserRepository repository)
+        {
+            _repository = repository;
+        }
         [HttpGet]
         public async Task<ActionResult> Hi()
         {
