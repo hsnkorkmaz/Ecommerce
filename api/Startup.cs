@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
+using api.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace api
@@ -39,7 +40,7 @@ namespace api
 
             //our injections
             services.AddScoped<IUserRepository, UserRepository>();
-
+            services.AddScoped<IJwtService, JwtService>();
 
 
 
