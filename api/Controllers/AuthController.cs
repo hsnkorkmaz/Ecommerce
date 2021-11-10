@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using api.Data;
+using api.Dtos;
+using api.Entities;
 
 namespace api.Controllers
 {
@@ -18,10 +16,20 @@ namespace api.Controllers
         {
             _repository = repository;
         }
-        [HttpGet]
-        public async Task<ActionResult> Hi()
+
+        [HttpPost("register")]
+        public async Task<ActionResult> Register(UserRegisterDto dto)
         {
-            return await Task.FromResult(Ok("hi"));
+            var user = new User()
+            {
+                Name = "",
+                Surname = "",
+                Email = dto.Email,
+                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                Address = "",
+                Role = "user"
+            };
+
+            return Created("success", await _repository.Create(user));
         }
     }
-}
