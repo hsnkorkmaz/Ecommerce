@@ -27,5 +27,10 @@ namespace api.Data
         {
             return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
         }
+
+        public async Task<User> GetById(int id)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }
