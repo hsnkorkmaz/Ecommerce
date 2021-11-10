@@ -24,7 +24,7 @@ namespace api
         }
 
         public IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SqlContext>(options =>
@@ -53,7 +53,6 @@ namespace api
             app.UseRouting();
 
             app.UseCors(policy => policy
-                .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());
