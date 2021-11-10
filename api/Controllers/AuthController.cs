@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos;
 using api.Entities;
+using api.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace api.Controllers
 {
@@ -11,10 +14,12 @@ namespace api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserRepository _repository;
+        private readonly IJwtService _jwtService;
 
-        public AuthController(IUserRepository repository)
+        public AuthController(IUserRepository repository, IJwtService jwtService)
         {
             _repository = repository;
+            _jwtService = jwtService;
         }
 
         [HttpPost("register")]
@@ -48,9 +53,38 @@ namespace api.Controllers
             {
                 return BadRequest(new { message = "Invalid Credentials" });
             }
-            
-            return Ok(user);
+
+            var jwt = _jwtService.GenerateToken(user.Id);
+
+            Response.Cookies.Append("jwt", jwt, new CookieOptions
+            {
+                //frontend can not access or modify
+                HttpOnly = true
+            });
+
+            return Ok(new
+            {
+                message = "success"
+            });
         }
 
+        [HttpGet("user")]
+        public async Task<ActionResult> User()
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                var token = _jwtService.ValidateToken(jwt);
+                var userId = Convert.ToInt32(token.Issuer);
+                var user = await _repository.GetById(userId);
+
+                return Ok(user);
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
+
+        }
     }
 }
