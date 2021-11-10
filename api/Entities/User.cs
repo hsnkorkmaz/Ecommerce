@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace api.Entities
 {
@@ -23,6 +20,7 @@ namespace api.Entities
         public string Email { get; set; }
 
         [Required]
+        [JsonIgnore]
         public string Password { get; set; }
 
         [Required]
