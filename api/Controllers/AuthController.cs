@@ -84,7 +84,19 @@ namespace api.Controllers
             {
                 return Unauthorized();
             }
-
         }
+
+        [HttpPost("logout")]
+        public async Task<ActionResult> Logout()
+        {
+          Response.Cookies.Delete("jwt");
+          return await Task.FromResult(Ok(new
+          {
+              message = "success"
+          }));
+        }
+
+
+
     }
 }
