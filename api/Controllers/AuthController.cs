@@ -32,4 +32,25 @@ namespace api.Controllers
 
             return Created("success", await _repository.Create(user));
         }
+
+
+        [HttpPost("login")]
+        public async Task<ActionResult> Login(UserLoginDto dto)
+        {
+            var user = await _repository.GetByEmail(dto.Email);
+
+            if (user == null)
+            {
+                return BadRequest(new { message = "Invalid Credentials" });
+            }
+
+            if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+            {
+                return BadRequest(new { message = "Invalid Credentials" });
+            }
+            
+            return Ok(user);
+        }
+
     }
+}

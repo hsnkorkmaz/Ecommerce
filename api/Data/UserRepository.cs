@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Data
 {
@@ -20,6 +21,11 @@ namespace api.Data
             await _context.Users.AddAsync(user);
             user.Id = await _context.SaveChangesAsync();
             return user;
+        }
+
+        public async Task<User> GetByEmail(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
         }
     }
 }
