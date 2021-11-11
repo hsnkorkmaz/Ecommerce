@@ -9,6 +9,7 @@ import Contact from './views/Contact';
 import Products from './views/Products';
 import Register from './views/Register';
 import Login from './views/Login';
+import Profile from './views/Profile';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/products" element={<Products />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </Router>
