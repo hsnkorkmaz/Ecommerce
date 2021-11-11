@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import CategoryLink from '../product/CategoryLink';
+import UserRegister from '../user/UserRegister';
 
 const Header = () => {
     const [navbarOpen, setNavbarOpen] = useState(false);
@@ -12,33 +12,6 @@ const Header = () => {
 
     return (
         <div className="sticky top-0 z-40">
-            {/* USER MENU */}
-            <div className={`transform top-0 left-0 w-full fixed h-full bg-gray-800 opacity-50 z-50 ${!isUserNav ? "hidden" : ""}`} onClick={() => setUserNav(!isUserNav)}></div>
-            <aside className={isUserNav ? mobileNavClass : "opacity-0 w-0 h-0"}>
-                <div className="flex items-center">
-                    <h1 className="w-full my-2 sm:text-xl md:text-2xl font-bold leading-tight text-center text-gray-800">
-                        User Menu
-                    </h1>
-                    {/*     <div className="mr-5 md:hidden"  onClick={() => setLeftOpen(!isUserNav)}>
-                            X
-                        </div> */}
-                </div>
-
-                <div className="w-full mb-4">
-                    <div className="h-1 mx-auto w-64 opacity-25 my-0 py-0 rounded-t" style={{ background: "linear-gradient(90deg, #d53369 0%, #daae51 100%)" }}></div>
-                </div>
-                <div className="md:mt-10">
-                    <ul>
-                        <li>
-                            Mail
-                        </li>
-                        <li>
-                            Password
-                        </li>
-                    </ul>
-                </div>
-            </aside>
-
             {/* SHOPPING CART */}
             <div className={`transform top-0 left-0 w-full fixed h-full bg-gray-800 opacity-50 z-50 ${!isShoppingNav ? "hidden" : ""}`} onClick={() => setShoppingNav(!isShoppingNav)}></div>
             <aside className={isShoppingNav ? mobileNavClass : "opacity-0 w-0 h-0"}>
@@ -83,14 +56,13 @@ const Header = () => {
 
                         </div>
                         <div className="flex">
-                            <button
+                            <Link
                                 className="text-white mr-2 bg-green-400 rounded-full cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent bg-transparent block lg:hidden outline-none focus:outline-none"
-                                type="button"
-                                onClick={() => setUserNav(!isUserNav)}>
+                                to="/login">
                                 <svg viewBox="0 0 512 512" enable-background="new 0 0 512 512" className="w-6 h-6 fill-current text-white">
                                     <path d="M454.426,392.582c-5.439-16.32-15.298-32.782-29.839-42.362c-27.979-18.572-60.578-28.479-92.099-39.085  c-7.604-2.664-15.33-5.568-22.279-9.7c-6.204-3.686-8.533-11.246-9.974-17.886c-0.636-3.512-1.026-7.116-1.228-10.661  c22.857-31.267,38.019-82.295,38.019-124.136c0-65.298-36.896-83.495-82.402-83.495c-45.515,0-82.403,18.17-82.403,83.468  c0,43.338,16.255,96.5,40.489,127.383c-0.221,2.438-0.511,4.876-0.95,7.303c-1.444,6.639-3.77,14.058-9.97,17.743  c-6.957,4.133-14.682,6.756-22.287,9.42c-31.521,10.605-64.119,19.957-92.091,38.529c-14.549,9.58-24.403,27.159-29.838,43.479  c-5.597,16.938-7.886,37.917-7.541,54.917h205.958h205.974C462.313,430.5,460.019,409.521,454.426,392.582z" />
                                 </svg>
-                            </button>
+                            </Link>
                             <button
                                 className="text-white bg-green-400 rounded-full cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent bg-transparent block lg:hidden outline-none focus:outline-none"
                                 type="button"
@@ -137,14 +109,12 @@ const Header = () => {
                         </ul>
                     </div>
                     <div className="hidden lg:block">
-                        <div onClick={() => setUserNav(!isUserNav)} className="flex items-center justify-center text-white bg-green-600 rounded-full cursor-pointer px-3 py-2 lg:static mr-3">
-                            <button
-                                type="button">
+                        <Link to="/login" className="flex items-center justify-center text-white bg-green-600 rounded-full cursor-pointer px-3 py-2 lg:static mr-3">
+                           
                                 <svg viewBox="0 0 512 512" enable-background="new 0 0 512 512" className="w-6 h-6 fill-current text-white">
                                     <path d="M454.426,392.582c-5.439-16.32-15.298-32.782-29.839-42.362c-27.979-18.572-60.578-28.479-92.099-39.085  c-7.604-2.664-15.33-5.568-22.279-9.7c-6.204-3.686-8.533-11.246-9.974-17.886c-0.636-3.512-1.026-7.116-1.228-10.661  c22.857-31.267,38.019-82.295,38.019-124.136c0-65.298-36.896-83.495-82.402-83.495c-45.515,0-82.403,18.17-82.403,83.468  c0,43.338,16.255,96.5,40.489,127.383c-0.221,2.438-0.511,4.876-0.95,7.303c-1.444,6.639-3.77,14.058-9.97,17.743  c-6.957,4.133-14.682,6.756-22.287,9.42c-31.521,10.605-64.119,19.957-92.091,38.529c-14.549,9.58-24.403,27.159-29.838,43.479  c-5.597,16.938-7.886,37.917-7.541,54.917h205.958h205.974C462.313,430.5,460.019,409.521,454.426,392.582z" />
                                 </svg>
-                            </button>
-                        </div>
+                        </Link>
                     </div>
                     <div className="hidden lg:block">
                         <div onClick={() => setShoppingNav(!isShoppingNav)} className="flex items-center justify-center text-white bg-green-600 rounded-full cursor-pointer px-3 py-2 lg:static">
