@@ -59,15 +59,18 @@ namespace api
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseCors(policy => policy
-                    //react and gh-pages
-                .WithOrigins(new []{"http://localhost:3000", "https://hsnkorkmaz.github.io/Ecommerce/" })
+            
+            app.UseCors(x => x
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .AllowCredentials());
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
 
+
+
+            app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
