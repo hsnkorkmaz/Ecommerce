@@ -1,6 +1,8 @@
 
+import React, { useEffect, useState } from 'react';
 import Header from './components/header/Header';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom'
+import UserContext from './context/UserContext';
 
 // Views
 import About from './views/About';
@@ -12,21 +14,26 @@ import Login from './views/Login';
 import Profile from './views/Profile';
 
 function App() {
+  const [user, setUser] = useState(null);
+  const value = { user, setUser };
+
   return (
-    <Router>
-      <div className="leading-normal tracking-normal" >
-        <Header />
-        <Routes>
-          <Route exact path="/" element={<Main />} />
-          <Route exact path="/about" element={<About />} />
-          <Route exact path="/contact" element={<Contact />} />
-          <Route exact path="/products" element={<Products />} />
-          <Route exact path="/register" element={<Register />} />
-          <Route exact path="/login" element={<Login />} />
-          <Route exact path="/profile" element={<Profile />} />
-        </Routes>
-      </div>
-    </Router>
+    <UserContext.Provider value={value}>
+      <Router>
+        <div className="leading-normal tracking-normal" >
+          <Header />
+          <Routes>
+            <Route exact path="/" element={<Main />} />
+            <Route exact path="/about" element={<About />} />
+            <Route exact path="/contact" element={<Contact />} />
+            <Route exact path="/products" element={<Products />} />
+            <Route exact path="/register" element={<Register />} />
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/profile" element={<Profile />} />
+          </Routes>
+        </div>
+      </Router>
+    </UserContext.Provider>
   );
 }
 
