@@ -22,11 +22,7 @@ namespace api.Entities
         [Required]
         [JsonIgnore]
         public string Password { get; set; }
-
-        [Required]
-        [MaxLength(100)]
-        public string Address { get; set; }
-
+        
         [Required]
         [MaxLength(20)]
         public string Role { get; set; }
