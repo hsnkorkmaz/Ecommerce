@@ -27,11 +27,10 @@ namespace api.Controllers
         {
             var user = new User()
             {
-                Name = "",
-                Surname = "",
+                Name = dto.Name,
+                Surname = dto.Surname,
                 Email = dto.Email,
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-                Address = "",
                 Role = "user"
             };
 
@@ -86,14 +85,14 @@ namespace api.Controllers
             }
         }
 
-        [HttpPost("logout")]
+        [HttpGet("logout")]
         public async Task<ActionResult> Logout()
         {
-          Response.Cookies.Delete("jwt");
-          return await Task.FromResult(Ok(new
-          {
-              message = "success"
-          }));
+            Response.Cookies.Delete("jwt");
+            return await Task.FromResult(Ok(new
+            {
+                message = "success"
+            }));
         }
 
 
