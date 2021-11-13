@@ -8,6 +8,8 @@ const UserRegister = () => {
 
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
+    const [name, setName] = React.useState('')
+    const [surname, setSurname] = React.useState('')
     const [passwordConfirm, setPasswordConfirm] = React.useState('')
     const [error, setError] = React.useState('')
     const [navigate, setNavigate] = React.useState(false)
@@ -20,6 +22,8 @@ const UserRegister = () => {
         }
 
         axios.post(authApi + 'register', {
+            "name": name,
+            "surname": surname,
             "email": email,
             "password": password
         })
@@ -27,7 +31,7 @@ const UserRegister = () => {
                 setNavigate(true);
             })
             .catch(err => {
-                console.log(err);
+                setError(err.response.data.message);
             });
     }
     
@@ -42,6 +46,16 @@ const UserRegister = () => {
             <div className="px-6 pb-3 rounded shadow-md text-black flex flex-col m-auto w-full md:w-1/2 lg:w-1/3">
                 <form onSubmit={submitRegisterForm}>
                     <h1 className="mb-8 text-3xl text-center">Register</h1>
+                    <input
+                        type="text"
+                        className="block border border-grey-light p-3 rounded mb-4 w-full"
+                        name="name"
+                        placeholder="Name" required onChange={e => setName(e.target.value)} />
+                            <input
+                        type="text"
+                        className="block border border-grey-light p-3 rounded mb-4 w-full"
+                        name="surname"
+                        placeholder="Surname" required onChange={e => setSurname(e.target.value)} />
                     <input
                         type="email"
                         className="block border border-grey-light p-3 rounded mb-4 w-full"
