@@ -1,5 +1,5 @@
 import React from 'react'
-import CategoryLink from './CategoryLink'
+import CategoryList from './CategoryList'
 import Product from './Product'
 
 const ProductList = () => {
@@ -28,14 +28,7 @@ const ProductList = () => {
                         <div className="h-1 mx-auto w-64 opacity-25 my-0 py-0 rounded-t" style={{ background: "linear-gradient(90deg, #d53369 0%, #daae51 100%)" }}></div>
                     </div>
                     <div className="md:mt-10">
-                        <ul>
-                            <li>
-                                <CategoryLink category="Kött" subCategories={[{ name: "Sub1" }, { name: "Sub2" }, { name: "Sub3" }, { name: "Sub4" }]} />
-                            </li>
-                            <li>
-                                <CategoryLink category="Fisk" subCategories={[{ name: "Sub11" }, { name: "Sub22" }]} />
-                            </li>
-                        </ul>
+                        <CategoryList />
                     </div>
                 </aside>
                 <div className="w-full">
