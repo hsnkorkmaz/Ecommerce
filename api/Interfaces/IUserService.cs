@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Entities;
 
-namespace api.Data
+namespace api.Interfaces
 {
     public interface IUserService
     {
