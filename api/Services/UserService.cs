@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Data;
 using api.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Data
+namespace api.Services
 {
-    public class UserRepository : IUserRepository
+    public class UserService : IUserService
     {
         private readonly SqlContext _context;
 
-        public UserRepository(SqlContext context)
+        public UserService(SqlContext context)
         {
             _context = context;
         }

@@ -6,7 +6,7 @@ using api.Entities;
 
 namespace api.Data
 {
-    public interface IUserRepository
+    public interface IUserService
     {
         Task<User> Create(User user);
         Task<User> GetByEmail(string email);

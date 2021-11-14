@@ -13,10 +13,10 @@ namespace api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IUserRepository _repository;
+        private readonly IUserService _repository;
         private readonly IJwtService _jwtService;
 
-        public AuthController(IUserRepository repository, IJwtService jwtService)
+        public AuthController(IUserService repository, IJwtService jwtService)
         {
             _repository = repository;
             _jwtService = jwtService;

@@ -40,7 +40,7 @@ namespace api
             });
 
             //our injections
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IcaApiService>();
             services.AddHttpClient();
