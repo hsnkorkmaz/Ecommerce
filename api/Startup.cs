@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using api.Data;
+using api.Interfaces;
 using api.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,8 +43,10 @@ namespace api
             //our injections
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IcaApiService>();
             services.AddHttpClient();
+            services.AddAutoMapper(typeof(Startup));
 
         }
 
