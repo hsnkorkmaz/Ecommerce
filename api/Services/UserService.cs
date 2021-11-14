@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Entities;
+using api.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Services

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using api.Data;
 using api.Dtos;
 using api.Entities;
+using api.Interfaces;
 using api.Services;
 using Microsoft.AspNetCore.Http;
 
@@ -13,12 +14,12 @@ namespace api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IUserService _repository;
+        private readonly IUserService _userService;
         private readonly IJwtService _jwtService;
 
-        public AuthController(IUserService repository, IJwtService jwtService)
+        public AuthController(IUserService userService, IJwtService jwtService)
         {
-            _repository = repository;
+            _userService = userService;
             _jwtService = jwtService;
         }
 
@@ -34,14 +35,14 @@ namespace api.Controllers
                 Role = "user"
             };
 
-            return Created("success", await _repository.Create(user));
+            return Created("success", await _userService.Create(user));
         }
 
 
         [HttpPost("login")]
         public async Task<ActionResult> Login(UserLoginDto dto)
         {
-            var user = await _repository.GetByEmail(dto.Email);
+            var user = await _userService.GetByEmail(dto.Email);
 
             if (user == null)
             {
@@ -75,7 +76,7 @@ namespace api.Controllers
                 var jwt = Request.Cookies["jwt"];
                 var token = _jwtService.ValidateToken(jwt);
                 var userId = Convert.ToInt32(token.Issuer);
-                var user = await _repository.GetById(userId);
+                var user = await _userService.GetById(userId);
 
                 return Ok(user);
             }
@@ -94,8 +95,5 @@ namespace api.Controllers
                 message = "success"
             }));
         }
-
-
-
     }
 }
