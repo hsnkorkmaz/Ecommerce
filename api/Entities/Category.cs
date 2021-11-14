@@ -12,5 +12,6 @@ namespace api.Entities
         public string Name { get; set; }
         public List<Category> ChildCategories { get; set; }
         public int? CategoryId { get; set; }
+        public List<Product> Products { get; set; }
     }
 }
