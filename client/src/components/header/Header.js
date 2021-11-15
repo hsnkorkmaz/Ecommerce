@@ -3,24 +3,27 @@ import axios from 'axios'
 import { authApi } from '../../api/ApiConfig'
 import { Link } from 'react-router-dom'
 import UserContext from '../../context/UserContext'
+import ShoppingContext from '../../context/ShoppingContext'
+import CartItem from '../shoppingcart/CartItem'
 
 
 const Header = () => {
     const [navbarOpen, setNavbarOpen] = useState(false);
     const [isShoppingNav, setShoppingNav] = useState(false)
     const { user, setUser } = useContext(UserContext);
+    const { cart, setCart } = useContext(ShoppingContext);
 
     const mobileNavClass = "transform top-0 right-0 w-content bg-white fixed h-full overflow-auto transition-all ease-in-out duration-300 px-3 z-50 visible";
 
     useEffect(() => {
         axios.get(authApi + 'user',
-        { withCredentials: true })
-        .then(function (response) {
-            setUser(response.data.name);
-        })
-        .catch(err => {
-           console.log(err.response.data.message);
-        });
+            { withCredentials: true })
+            .then(function (response) {
+                setUser(response.data.name);
+            })
+            .catch(err => {
+                console.log(err.response.data.message);
+            });
     }, [])
 
     return (
@@ -40,13 +43,16 @@ const Header = () => {
                 <div className="w-full mb-4">
                     <div className="h-1 mx-auto w-64 opacity-25 my-0 py-0 rounded-t" style={{ background: "linear-gradient(90deg, #d53369 0%, #daae51 100%)" }}></div>
                 </div>
-                <div className="md:mt-10">
+                <div className="md:mt-5">
+                    <span>You have <strong>{cart.length}</strong> items in the cart</span>
                     <ul>
                         <li>
-                            Product 1
-                        </li>
-                        <li>
-                            Product 2
+                            {cart.map((item, index) => {
+                                return (
+                                   <CartItem item={item} key={Math.random() + Date.now()}/>
+                                )
+                            })
+                            }
                         </li>
                     </ul>
                 </div>
@@ -60,7 +66,7 @@ const Header = () => {
                             <Link
                                 className="text-base font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
                                 to="./"><span className="ml-2">Logo</span></Link>
-                                
+
                             {/* <input type="text"
                             placeholder="Search your product"
                             className="bg-white outline-none text-sm focus:outline-none rounded-3xl px-5 ml-4" /> */}
@@ -124,10 +130,10 @@ const Header = () => {
                     </div>
                     <div className="hidden lg:block">
                         <Link to="/profile" className="flex items-center justify-center text-white bg-green-600 rounded-full cursor-pointer px-3 py-2 lg:static mr-3">
-                           
-                                <svg viewBox="0 0 512 512" enableBackground="new 0 0 512 512" className="w-6 h-6 fill-current text-white">
-                                    <path d="M454.426,392.582c-5.439-16.32-15.298-32.782-29.839-42.362c-27.979-18.572-60.578-28.479-92.099-39.085  c-7.604-2.664-15.33-5.568-22.279-9.7c-6.204-3.686-8.533-11.246-9.974-17.886c-0.636-3.512-1.026-7.116-1.228-10.661  c22.857-31.267,38.019-82.295,38.019-124.136c0-65.298-36.896-83.495-82.402-83.495c-45.515,0-82.403,18.17-82.403,83.468  c0,43.338,16.255,96.5,40.489,127.383c-0.221,2.438-0.511,4.876-0.95,7.303c-1.444,6.639-3.77,14.058-9.97,17.743  c-6.957,4.133-14.682,6.756-22.287,9.42c-31.521,10.605-64.119,19.957-92.091,38.529c-14.549,9.58-24.403,27.159-29.838,43.479  c-5.597,16.938-7.886,37.917-7.541,54.917h205.958h205.974C462.313,430.5,460.019,409.521,454.426,392.582z" />
-                                </svg>
+
+                            <svg viewBox="0 0 512 512" enableBackground="new 0 0 512 512" className="w-6 h-6 fill-current text-white">
+                                <path d="M454.426,392.582c-5.439-16.32-15.298-32.782-29.839-42.362c-27.979-18.572-60.578-28.479-92.099-39.085  c-7.604-2.664-15.33-5.568-22.279-9.7c-6.204-3.686-8.533-11.246-9.974-17.886c-0.636-3.512-1.026-7.116-1.228-10.661  c22.857-31.267,38.019-82.295,38.019-124.136c0-65.298-36.896-83.495-82.402-83.495c-45.515,0-82.403,18.17-82.403,83.468  c0,43.338,16.255,96.5,40.489,127.383c-0.221,2.438-0.511,4.876-0.95,7.303c-1.444,6.639-3.77,14.058-9.97,17.743  c-6.957,4.133-14.682,6.756-22.287,9.42c-31.521,10.605-64.119,19.957-92.091,38.529c-14.549,9.58-24.403,27.159-29.838,43.479  c-5.597,16.938-7.886,37.917-7.541,54.917h205.958h205.974C462.313,430.5,460.019,409.521,454.426,392.582z" />
+                            </svg>
                         </Link>
                     </div>
                     <div className="hidden lg:block">
