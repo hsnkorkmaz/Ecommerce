@@ -13,6 +13,7 @@ namespace api.Mapping
         public AutoMapping()
         {
             CreateMap<Category, CategoryDto>();
+            CreateMap<Product, ProductDto>();
         }
     }
 }
