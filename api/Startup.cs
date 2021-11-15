@@ -44,6 +44,7 @@ namespace api
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IcaApiService>();
             services.AddHttpClient();
             services.AddAutoMapper(typeof(Startup));
