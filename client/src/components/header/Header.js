@@ -10,10 +10,24 @@ import CartItem from '../shoppingcart/CartItem'
 const Header = () => {
     const [navbarOpen, setNavbarOpen] = useState(false);
     const [isShoppingNav, setShoppingNav] = useState(false)
+    const [totalCart, setTotalCart] = useState(0.00);
+
     const { user, setUser } = useContext(UserContext);
     const { cart, setCart } = useContext(ShoppingContext);
 
     const mobileNavClass = "transform top-0 right-0 w-content bg-white fixed h-full overflow-auto transition-all ease-in-out duration-300 px-3 z-50 visible";
+
+
+
+    useEffect(() => {
+        let totalAmount = 0.00;
+        cart.forEach(cart => {
+          totalAmount += cart.totalPrice;
+        });
+        setTotalCart(Math.round( totalAmount * 1e2 ) / 1e2);
+      }, [cart]);
+
+
 
     useEffect(() => {
         axios.get(authApi + 'user',
@@ -49,7 +63,7 @@ const Header = () => {
                         <li>
                             {cart.map((item, index) => {
                                 return (
-                                   <CartItem item={item} key={Math.random() + Date.now()}/>
+                                   <CartItem item={item} key={Math.random() + Date.now()} />
                                 )
                             })
                             }
@@ -145,7 +159,7 @@ const Header = () => {
                                     </path>
                                 </svg>
                             </button>
-                            <span className="text-sm font-medium ml-2">425,25 kr</span>
+                            <span className="text-sm font-medium ml-2">{totalCart} kr</span>
                         </div>
                     </div>
                 </div>
