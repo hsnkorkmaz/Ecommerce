@@ -19,29 +19,6 @@ namespace api.Services
             _context = context;
         }
 
-        public async Task<Product> GetById(int id)
-        {
-            return await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
-        }
-
-        public async Task<List<Product>> GetByName(string name)
-        {
-            return await _context.Products.Where(x => x.Name.Contains(name)).ToListAsync();
-        }
-
-        public async Task<List<Product>> GetByCategories(List<int> categoryIds)
-        {
-            return await _context.Products.Where(x => x.Categories.Any(y => categoryIds.Contains(y.Id))).ToListAsync();
-        }
-
-        public async Task<List<Product>> GetByCategoryId(int categoryId)
-        {
-            var result = await _context.Products.SelectMany(x => x.Categories.Where(y => y.CategoryId == categoryId)).SelectMany(z => z.Products).Distinct().ToListAsync();
-
-            //var resultWithoutChildCategories = await _context.Products.Where(x => x.Categories.Any(y => y.CategoryId == categoryId)).ToListAsync();
-            return result;
-        }
-
         public async Task<List<Product>> GetWithDto(ProductRequestDto requestDto)
         {
             var result = new List<Product>();
