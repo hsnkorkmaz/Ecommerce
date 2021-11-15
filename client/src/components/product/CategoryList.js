@@ -17,7 +17,6 @@ const CategoryList = () => {
     }
 
     useEffect(() => {
-        console.log(categories)
         getCategories();
     }, []);
 
