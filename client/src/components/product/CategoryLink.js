@@ -17,7 +17,22 @@ const CategoryLink = (props) => {
                     {props.subCategories?.map(subCategory => {
                         return (
                             <li key={subCategory.id}>
-                                <div className="cursor-pointer mx-auto lg:mx-0 bg-white text-gray-800 font-normal rounded-full my-2 py-2 px-8 shadow-sm focus:outline-none focus:shadow-outline transform transition hover:text-green-700 hover:bg-green-50 duration-300 ease-in-out">
+                                <div id={subCategory.id} className="cursor-pointer mx-auto lg:mx-0 bg-white text-gray-800 font-normal rounded-full my-2 py-2 px-8 shadow-sm focus:outline-none focus:shadow-outline transform transition hover:text-green-700 hover:bg-green-50 duration-300 ease-in-out"
+                                    onClick={(e) => {
+                                        let reqData = {
+                                            "categoryIds": [
+                                                e.target.id
+                                            ],
+                                            "productIds": [
+                                            ],
+                                            "name": "",
+                                            "skip": 0,
+                                            "take": 50,
+                                            "orderType": "asc"
+                                        };
+                                        props.getProducts(reqData);
+                                    }
+                                    }>
                                     {subCategory.name}
                                 </div>
                             </li>

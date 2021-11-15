@@ -40,8 +40,7 @@ const ProductList = () => {
 
     return (
         <div>
-            <div className={`transform top-0 left-0 w-full fixed h-full bg-gray-800 opacity-50 z-40 ${!isLeftOpen ? "hidden" : ""}`} onClick={() => setLeftOpen(!isLeftOpen)}>
-            </div>
+            <div className={`transform top-0 left-0 w-full fixed h-full bg-gray-800 opacity-50 z-40 ${!isLeftOpen ? "hidden" : ""}`} onClick={() => setLeftOpen(!isLeftOpen)}></div>
             <div className="container mx-auto flex">
                 <aside className={isLeftOpen ? mobileNavClass : "min-w-min mr-4 mt-3 hidden md:block"}>
                     <div className="flex items-center">
@@ -57,7 +56,7 @@ const ProductList = () => {
                         <div className="h-1 mx-auto w-64 opacity-25 my-0 py-0 rounded-t" style={{ background: "linear-gradient(90deg, #d53369 0%, #daae51 100%)" }}></div>
                     </div>
                     <div className="md:mt-10">
-                        <CategoryList />
+                        <CategoryList getProducts={getProducts} />
                     </div>
                 </aside>
                 <div className="w-full">
@@ -96,7 +95,7 @@ const ProductList = () => {
                                 (e) => {
                                     let newRqData = defaultRequestData;
                                     newRqData.orderType = e.target.value;
-                                    
+
                                     if (productName.length > 0) {
                                         newRqData.name = productName;
                                         newRqData.categoryIds = [];

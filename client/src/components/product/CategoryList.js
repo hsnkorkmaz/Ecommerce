@@ -3,7 +3,7 @@ import CategoryLink from './CategoryLink'
 import { categoryApi } from '../../api/ApiConfig'
 import axios from 'axios'
 
-const CategoryList = () => {
+const CategoryList = (props) => {
     const [categories, setCategories] = React.useState(null);
 
     const getCategories = () => {
@@ -28,7 +28,7 @@ const CategoryList = () => {
                     categories && categories.map(category => {
                         return (
                             <li>
-                                <CategoryLink key={category.id} category={category} subCategories={category.childCategories} />
+                                <CategoryLink key={category.id} category={category} subCategories={category.childCategories} getProducts={props.getProducts} />
                             </li>
                         )
                     })
