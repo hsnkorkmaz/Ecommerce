@@ -10,7 +10,7 @@ const CartItem = ({ item }) => {
         cart.forEach(item => {
             if (item.productId === id) {
                 item.quantity += 1;
-                item.totalPrice = (Math.round(item.price * item.quantity * 100) / 100).toFixed(2);
+                item.totalPrice = Math.round( item.price * item.quantity * 1e2 ) / 1e2;
             }
         });
         setCart([...cart]);
@@ -21,7 +21,7 @@ const CartItem = ({ item }) => {
             if (item.productId === id) {
                 if (item.quantity-1 !== 0) {
                     item.quantity -= 1;
-                    item.totalPrice = (Math.round(item.price * item.quantity * 100) / 100).toFixed(2);
+                    item.totalPrice = Math.round( item.price * item.quantity * 1e2 ) / 1e2;
                 }
                 else
                 {
