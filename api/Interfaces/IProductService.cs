@@ -10,5 +10,6 @@ namespace api.Interfaces
     public interface IProductService
     {
         Task<List<Product>> GetWithDto(ProductRequestDto requestDto);
+        Task<Product> GetWithId(int id);
     }
 }

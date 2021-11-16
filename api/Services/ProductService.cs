@@ -68,5 +68,10 @@ namespace api.Services
 
             return result;
         }
+
+        public async Task<Product> GetWithId(int id)
+        {
+            return await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }
