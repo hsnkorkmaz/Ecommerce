@@ -20,9 +20,10 @@ namespace api.Entities
         [MaxLength(50)]
         public string ImageName { get; set; }
 
-        [Column(TypeName = "decimal(18,4)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
         public string Description { get; set; }
         public List<Category> Categories { get; set; }
+        public List<OrderProduct> OrderProducts { get; set; }
     }
 }
