@@ -8135,6 +8135,11 @@
     "is-docker" "^2.0.0"
     "is-wsl" "^2.1.1"
 
+"openssl@^2.0.0":
+  "integrity" "sha512-0FgKhQ/e+XCtTTgn3qZO2g3y+Y3FC/LGvt77oObmMR4ZkZvsV1CuG/mMZClZgZqVKr0+tkemP+I3Uub4WXkHYw=="
+  "resolved" "https://registry.npmjs.org/openssl/-/openssl-2.0.0.tgz"
+  "version" "2.0.0"
+
 "opn@^5.5.0":
   "integrity" "sha512-PqHpggC9bLV0VeWcdKhkpxY+3JTzetLSqTCWL/z/tFIbI6G8JCjondXklT1JinczLz2Xib62sSp0T/gKT4KksA=="
   "resolved" "https://registry.npmjs.org/opn/-/opn-5.5.0.tgz"
