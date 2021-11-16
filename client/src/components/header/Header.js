@@ -4,7 +4,7 @@ import { authApi } from '../../api/ApiConfig'
 import { Link } from 'react-router-dom'
 import UserContext from '../../context/UserContext'
 import ShoppingContext from '../../context/ShoppingContext'
-import CartItem from '../shoppingcart/CartItem'
+import ShoppingCart from '../shoppingcart/ShoppingCart'
 
 
 const Header = () => {
@@ -15,17 +15,14 @@ const Header = () => {
     const { user, setUser } = useContext(UserContext);
     const { cart, setCart } = useContext(ShoppingContext);
 
-    const mobileNavClass = "transform top-0 right-0 w-content bg-white fixed h-full overflow-auto transition-all ease-in-out duration-300 px-3 z-50 visible";
-
-
 
     useEffect(() => {
         let totalAmount = 0.00;
         cart.forEach(cart => {
-          totalAmount += cart.totalPrice;
+            totalAmount += cart.totalPrice;
         });
-        setTotalCart(Math.round( totalAmount * 1e2 ) / 1e2);
-      }, [cart]);
+        setTotalCart(Math.round(totalAmount * 1e2) / 1e2);
+    }, [cart]);
 
 
 
@@ -42,36 +39,7 @@ const Header = () => {
 
     return (
         <div className="sticky top-0 z-40">
-            {/* SHOPPING CART */}
-            <div className={`transform top-0 left-0 w-full fixed h-full bg-gray-800 opacity-50 z-50 ${!isShoppingNav ? "hidden" : ""}`} onClick={() => setShoppingNav(!isShoppingNav)}></div>
-            <aside className={isShoppingNav ? mobileNavClass : "opacity-0 w-0 h-0"}>
-                <div className="flex items-center">
-                    <h1 className="w-full my-2 sm:text-xl md:text-2xl font-bold leading-tight text-center text-gray-800">
-                        Shopping Cart
-                    </h1>
-                    {/*     <div className="mr-5 md:hidden"  onClick={() => setLeftOpen(!isShoppingNav)}>
-                            X
-                        </div> */}
-                </div>
-
-                <div className="w-full mb-4">
-                    <div className="h-1 mx-auto w-64 opacity-25 my-0 py-0 rounded-t" style={{ background: "linear-gradient(90deg, #d53369 0%, #daae51 100%)" }}></div>
-                </div>
-                <div className="md:mt-5">
-                    <span>You have <strong>{cart.length}</strong> items in the cart</span>
-                    <ul>
-                        <li>
-                            {cart.map((item, index) => {
-                                return (
-                                   <CartItem item={item} key={Math.random() + Date.now()} />
-                                )
-                            })
-                            }
-                        </li>
-                    </ul>
-                </div>
-            </aside>
-
+            <ShoppingCart isShoppingNav={isShoppingNav} setShoppingNav={setShoppingNav} totalCart={totalCart}/>
 
             <nav className="flex flex-wrap items-center justify-between px-2 py-3 z-40" style={{ background: "linear-gradient(90deg, #059669 0%, #f4f269 100%)" }}>
                 <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
@@ -80,11 +48,6 @@ const Header = () => {
                             <Link
                                 className="text-base font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
                                 to="./"><span className="ml-2">Logo</span></Link>
-
-                            {/* <input type="text"
-                            placeholder="Search your product"
-                            className="bg-white outline-none text-sm focus:outline-none rounded-3xl px-5 ml-4" /> */}
-
                         </div>
                         <div>
 
