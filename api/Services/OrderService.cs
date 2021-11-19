@@ -26,12 +26,12 @@ namespace api.Services
 
         public async Task<Order> GetById(int id)
         {
-            return await _context.Orders.Include(x=> x.Products).FirstOrDefaultAsync(x => x.Id == id);
+             return await _context.Orders.Where(x => x.UserId == id).Include(x => x.Products).ThenInclude(y=> y.Product).FirstOrDefaultAsync();
         }
 
         public async Task<List<Order>> GetByUserId(int id)
         {
-            return await _context.Orders.Include(x => x.Products).Where(x => x.User.Id == id).ToListAsync();
+            return await _context.Orders.Where(x => x.UserId == id).Include(x => x.Products).ThenInclude(y=> y.Product).ToListAsync();
         }
     }
 }
