@@ -26,11 +26,13 @@ namespace api.Services
             {
                 if (requestDto.OrderType == "desc")
                 {
-                    result = await _context.Products.Where(x => x.Name.StartsWith(requestDto.Name)).OrderByDescending(x => x.Price).Skip(requestDto.Skip).Take(requestDto.Take).ToListAsync();
+                    result = await _context.Products.Where(x => x.Name.StartsWith(requestDto.Name))
+                        .OrderByDescending(x => x.Price).Skip(requestDto.Skip).Take(requestDto.Take).ToListAsync();
                 }
                 if (requestDto.OrderType == "asc")
                 {
-                    result = await _context.Products.Where(x => x.Name.StartsWith(requestDto.Name)).OrderBy(x => x.Price).Skip(requestDto.Skip).Take(requestDto.Take).ToListAsync();
+                    result = await _context.Products.Where(x => x.Name.StartsWith(requestDto.Name))
+                        .OrderBy(x => x.Price).Skip(requestDto.Skip).Take(requestDto.Take).ToListAsync();
                 }
             }
 
@@ -38,11 +40,13 @@ namespace api.Services
             {
                 if (requestDto.OrderType == "desc")
                 {
-                    result = await _context.Products.Where(x => requestDto.ProductIds.Contains(x.Id)).OrderByDescending(x => x.Price).Skip(requestDto.Skip).Take(requestDto.Take).ToListAsync();
+                    result = await _context.Products.Where(x => requestDto.ProductIds.Contains(x.Id))
+                        .OrderByDescending(x => x.Price).Skip(requestDto.Skip).Take(requestDto.Take).ToListAsync();
                 }
                 if (requestDto.OrderType == "asc")
                 {
-                    result = await _context.Products.Where(x => requestDto.ProductIds.Contains(x.Id)).OrderBy(x => x.Price).Skip(requestDto.Skip).Take(requestDto.Take).ToListAsync();
+                    result = await _context.Products.Where(x => requestDto.ProductIds.Contains(x.Id))
+                        .OrderBy(x => x.Price).Skip(requestDto.Skip).Take(requestDto.Take).ToListAsync();
                 }
             }
 
