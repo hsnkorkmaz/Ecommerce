@@ -61,5 +61,20 @@ namespace api.Controllers
             await _orderService.Create(orderDb);
             return Ok("success");
         }
+
+        [HttpGet("orders")]
+        public async Task<ActionResult> Orders()
+        {
+            var jwt = Request.Cookies["jwt"];
+            var token = _jwtService.ValidateToken(jwt);
+            var userId = Convert.ToInt32(token.Issuer);
+
+            var orders = await _orderService.GetByUserId(userId);
+
+            var ordersDto = _mapper.Map<List<OrderDto>>(orders);
+
+            return Ok(ordersDto);
+        }
+
     }
 }
