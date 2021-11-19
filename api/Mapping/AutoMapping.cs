@@ -14,6 +14,8 @@ namespace api.Mapping
         {
             CreateMap<Category, CategoryDto>();
             CreateMap<Product, ProductDto>();
+            CreateMap<OrderProduct, OrderProductDto>();
+            CreateMap<Order, OrderDto>();
         }
     }
 }
