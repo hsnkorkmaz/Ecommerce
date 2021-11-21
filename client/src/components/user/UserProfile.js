@@ -3,6 +3,7 @@ import axios from 'axios'
 import { authApi } from '../../api/ApiConfig'
 import UserContext from '../../context/UserContext'
 import { Navigate } from 'react-router-dom'
+import OrderList from '../orders/OrderList'
 
 const UserProfile = () => {
     const [navigate, setNavigate] = React.useState(false)
@@ -23,6 +24,7 @@ const UserProfile = () => {
                 });
         }
     }, []);
+
 
     const logout = () => {
         axios.get(authApi + 'logout',
@@ -52,7 +54,7 @@ const UserProfile = () => {
                     <div className="w-full mb-4">
                         <div className="h-1 mx-auto w-64 opacity-25 my-0 py-0 rounded-t" style={{ background: "linear-gradient(90deg, #d53369 0%, #daae51 100%)" }}></div>
                     </div>
-                    <div className="md:mt-5">
+                    <div className="md:mt-5 ml-14 md:ml-0">
                         <ul>
                             <li>
                                 <button
@@ -73,6 +75,9 @@ const UserProfile = () => {
                     </h1>
                     <div className="w-full mb-4">
                         <div className="h-1 mx-auto w-64 opacity-25 my-0 py-0 rounded-t" style={{ background: "linear-gradient(90deg, #d53369 0%, #daae51 100%)" }}></div>
+                    </div>
+                    <div className="md:mt-5 ml-14 mr-14 md:ml-0">
+                       <OrderList />
                     </div>
                 </div>
             </div>
