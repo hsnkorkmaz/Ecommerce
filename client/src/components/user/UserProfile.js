@@ -58,7 +58,7 @@ const UserProfile = () => {
                         <ul>
                             <li>
                                 <button
-                                    className="text-white mr-2 bg-green-400 rounded-full cursor-pointer text-l leading-none px-3 py-1 border border-solid border-transparent bg-transparent block lg:hidden outline-none focus:outline-none"
+                                    className="text-white mr-2 bg-green-400 rounded-full cursor-pointer text-l leading-none px-3 py-1 border border-solid border-transparent bg-transparent block outline-none focus:outline-none"
                                     onClick={() => logout()}>
                                     Logout
                                 </button>
