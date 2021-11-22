@@ -15,7 +15,7 @@ const OrderCard = ({ order, selectedOrder, setSelectedOrder }) => {
         <div className="w-full py-3 pr-3 cursor-pointer">
             {
                 order?.isDelivered === false ?
-                    <div className="bg-gradient-to-b from-red-200 to-red-100 border-b-4 border-red-600 rounded-lg shadow-lg p-5"
+                    <div
                     className={selectedOrder?.id === order.id ? "bg-gradient-to-b from-red-200 to-red-100 border-b-4 border-t-4 border-gray-900 rounded-lg shadow-xl p-5" : "bg-gradient-to-b from-red-200 to-red-100 border-b-4 border-red-600 rounded-lg shadow-lg p-5"}
                     onClick={handleClick}>
                         <div className="flex flex-row items-center">
@@ -29,7 +29,8 @@ const OrderCard = ({ order, selectedOrder, setSelectedOrder }) => {
                         </div>
                     </div>
                     :
-                    <div className="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-lg p-5"
+                    <div 
+                    className={selectedOrder?.id === order.id ? "bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-t-4 border-gray-900 rounded-lg shadow-xl p-5" : "bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-lg p-5"}
                     onClick={handleClick}>
                         <div className="flex flex-row items-center">
                             <div className="flex-1 text-left">
