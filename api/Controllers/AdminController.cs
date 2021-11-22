@@ -18,13 +18,15 @@ namespace api.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
         private readonly IOrderService _orderService;
+        private readonly IMetricService _metricService;
         private readonly IMapper _mapper;
 
-        public AdminController(ICategoryService categoryService, IProductService productService, IOrderService orderService, IMapper mapper)
+        public AdminController(ICategoryService categoryService, IProductService productService, IOrderService orderService, IMetricService metricService, IMapper mapper)
         {
             _categoryService = categoryService;
             _productService = productService;
             _orderService = orderService;
+            _metricService = metricService;
             _mapper = mapper;
         }
         
@@ -89,6 +91,13 @@ namespace api.Controllers
             var deleted = await _categoryService.DeleteCategory(id);
 
             return Ok("success");
+        }
+
+
+        [HttpGet("metrics")]
+        public async Task<ActionResult> Metrics()
+        {
+            return Ok(await _metricService.GetMetrics());
         }
     }
 }
