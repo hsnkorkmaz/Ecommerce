@@ -44,19 +44,19 @@ const AdminCategories = () => {
                         categories?.map(category => {
                             return (
                                 <div key={category.id}>
-                                    <CategoryItem id={category.id} name={category.name} indent="-" setSelectedCategory={setSelectedCategory} />
+                                    <CategoryItem id={category.id} name={category.name} indent="-" selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
                                     <div>
                                         {
                                             category.childCategories?.map(childCategory => {
                                                 return (
                                                     <div key={childCategory.id}>
-                                                        <CategoryItem id={childCategory.id} name={childCategory.name} indent="--" setSelectedCategory={setSelectedCategory} />
+                                                        <CategoryItem id={childCategory.id} name={childCategory.name} indent="--" selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
                                                         <div>
                                                             {
                                                                 childCategory.childCategories?.map(grandChild => {
                                                                     return (
                                                                         <div key={grandChild.id}>
-                                                                            <CategoryItem id={grandChild.id} name={grandChild.name} indent="---" setSelectedCategory={setSelectedCategory} />
+                                                                            <CategoryItem id={grandChild.id} name={grandChild.name} indent="---" selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
                                                                         </div>
                                                                     )
                                                                 })
