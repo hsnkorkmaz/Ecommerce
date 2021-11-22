@@ -67,7 +67,7 @@ const AdminCategories = () => {
     }
 
     return (
-        <div>
+        <div className="mt-10">
             <div className="flex flex-col md:flex-row md:justify-start">
                 <div className="max-h-screen overflow-y-scroll">
                     <h1 className="text-2xl font-bold">Categories</h1>
