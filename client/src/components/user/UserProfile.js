@@ -1,46 +1,9 @@
 import React, { useEffect, useContext, useState } from 'react'
 import axios from 'axios'
 import { authApi } from '../../api/ApiConfig'
-import UserContext from '../../context/UserContext'
-import { Navigate } from 'react-router-dom'
 import OrderList from '../orders/OrderList'
 
-const UserProfile = () => {
-    const [navigate, setNavigate] = React.useState(false)
-    const [currentUser, setCurrentUser] = useState();
-    const { user, setUser } = useContext(UserContext);
-
-    useEffect(() => {
-        if (user === null) {
-            setNavigate(true);
-        } else {
-            axios.get(authApi + 'user',
-                { withCredentials: true })
-                .then(function (response) {
-                    setCurrentUser(response.data);
-                })
-                .catch(err => {
-                    setNavigate(true);
-                });
-        }
-    }, []);
-
-
-    const logout = () => {
-        axios.get(authApi + 'logout',
-            { withCredentials: true })
-            .then(function (response) {
-                setUser(null);
-                setNavigate(true);
-            })
-            .catch(err => {
-                setNavigate(true);
-            });
-    }
-
-    if (navigate) {
-        return <Navigate to='/login' />
-    }
+const UserProfile = ({isAdmin, user, setUser, navigate, setNavigate, currentUser, setCurrentUser, logout}) => {
 
     return (
         <div>
@@ -77,7 +40,7 @@ const UserProfile = () => {
                         <div className="h-1 mx-auto w-64 opacity-25 my-0 py-0 rounded-t" style={{ background: "linear-gradient(90deg, #d53369 0%, #daae51 100%)" }}></div>
                     </div>
                     <div className="md:mt-5 ml-14 mr-14 md:ml-0">
-                       <OrderList />
+                       {currentUser != null && isAdmin != true ? <OrderList /> : ""}
                     </div>
                 </div>
             </div>
