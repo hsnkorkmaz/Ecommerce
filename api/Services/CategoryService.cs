@@ -19,14 +19,33 @@ namespace api.Services
             _context = context;
         }
 
-        public Task<List<Category>> GetAll()
+        public async Task<List<Category>> GetAll()
         {
-            var categories = _context.Categories.Where(x => x.CategoryId == null)
+            var categories = await _context.Categories.Where(x => x.CategoryId == null)
                 .Include(x => x.ChildCategories)
                 .ThenInclude(x => x.ChildCategories)
                 .ToListAsync();
 
             return categories;
+        }
+
+        public async Task<Category> GetById(int id)
+        {
+            return await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<Category> InsertCategory(Category category)
+        {
+            await _context.Categories.AddAsync(category);
+            category.Id = await _context.SaveChangesAsync();
+            return category;
+        }
+
+        public async Task<Category> UpdateCategory(Category category)
+        {
+            _context.Categories.Update(category);
+            category.Id = await _context.SaveChangesAsync();
+            return category;
         }
     }
 }
