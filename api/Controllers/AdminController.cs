@@ -99,5 +99,29 @@ namespace api.Controllers
         {
             return Ok(await _metricService.GetMetrics());
         }
+
+        [HttpGet("orders")]
+        public async Task<ActionResult> GetAllOrders()
+        {
+            var orders = await _orderService.GetAll();
+            var ordersDto = _mapper.Map<List<AdminOrderDto>>(orders);
+            return Ok(ordersDto);
+        }
+
+        [HttpGet("orderById")]
+        public async Task<ActionResult> GetOrderById(int id)
+        {
+            var order = await _orderService.GetById(id);
+            var orderDto = _mapper.Map<OrderDto>(order);
+            return Ok(orderDto);
+        }
+
+        [HttpGet("orderDeliver")]
+        public async Task<ActionResult> OrderDeliver(int id)
+        {
+            var order = await _orderService.DeliverOrder(id);
+            var orderDto = _mapper.Map<OrderDto>(order);
+            return Ok(orderDto);
+        }
     }
 }
