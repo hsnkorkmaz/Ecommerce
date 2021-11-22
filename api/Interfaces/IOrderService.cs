@@ -8,8 +8,11 @@ namespace api.Interfaces
 {
     public interface IOrderService
     {
+        Task<List<Order>> GetAll();
         Task<Order> Create(Order order);
         Task<Order> GetById(int id);
         Task<List<Order>> GetByUserId(int id);
+
+        Task<Order> DeliverOrder(int id);
     }
 }
