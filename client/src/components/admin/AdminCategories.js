@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { categoryApi } from '../../api/ApiConfig';
+import { adminApi } from '../../api/ApiConfig';
 import axios from 'axios';
 import CategoryOption from './CategoryOption';
 import CategoryItem from './CategoryItem';
@@ -24,8 +25,24 @@ const AdminCategories = () => {
 
 
     useEffect(() => {
-        if (selectedCategory != null) {
-            setCategoryName(selectedCategory);
+        if (selectedCategory != null && selectedCategory != "0") {
+
+            axios.get(adminApi + "categoryById",
+                { params: { id: selectedCategory } })
+                .then(res => {
+                    setCategoryName(res.data.name);
+                    if (res.data.parentId != null) {
+                        setParentCategory(res.data.parentId);
+                    }
+                    else {
+                        setParentCategory(0);
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+
+           
         }
     }, [selectedCategory]);
 
@@ -37,7 +54,7 @@ const AdminCategories = () => {
 
     return (
         <div>
-            <div className="flex flex-col md:flex-row md:justify-between">
+            <div className="flex flex-col md:flex-row md:justify-start">
                 <div className="max-h-screen overflow-y-scroll">
                     <h1 className="text-2xl font-bold">Categories</h1>
                     {
@@ -72,7 +89,7 @@ const AdminCategories = () => {
                         })
                     }
                 </div>
-                <div>
+                <div className="ml-7">
                     <h1 className="text-2xl font-bold">{selectedCategory ? "Update Category" : "Add New Category"}</h1>
 
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => {
@@ -119,13 +136,67 @@ const AdminCategories = () => {
                             placeholder="CategoryName" value={categoryName} required onChange={e => setCategoryName(e.target.value)} />
 
                         {selectedCategory
-                            ? <button type="submit"
-                                className="text-center py-3 rounded bg-green-500 text-white hover:bg-green-dark focus:outline-none my-1 w-full">
+                            ? <div><button type="submit"
+                                className="text-center py-3 rounded bg-green-500 text-white hover:bg-green-dark focus:outline-none my-1 w-full"
+                                onClick = {() => {
+                                    axios.put(adminApi + "categoryUpdate", {
+                                        id: selectedCategory,
+                                        name: categoryName,
+                                        parentId: parentCategory
+                                    })
+                                    .then(res => {
+                                        getCategories();
+                                        setCategoryName('');
+                                        setParentCategory(0);
+                                        setSelectedCategory(null);
+                                    })
+                                    .catch(err => {
+                                        console.log(err)
+                                    });
+                                }}>
                                 Update</button>
+                                <button type="submit"
+                                    className="text-center py-3 rounded bg-red-500 text-white hover:bg-red-dark focus:outline-none my-1 w-full"
+                                    onClick={() => {
+                                        axios.delete(adminApi + "categoryDelete", {
+                                            params: {
+                                                id: selectedCategory
+                                            }
+                                        })
+                                        .then(res => {
+                                            getCategories();
+                                            setCategoryName('');
+                                            setParentCategory(0);
+                                            setSelectedCategory(null);
+                                        })
+                                        .catch(err => {
+                                            console.log(err)
+                                        });
+                                    }
+                                    }>
+                                    Delete</button>
+                                </div>
+                                
 
                             : <button
                                 type="submit"
-                                className="text-center py-3 rounded bg-green-500 text-white hover:bg-green-dark focus:outline-none my-1 w-full">
+                                className="text-center py-3 rounded bg-green-500 text-white hover:bg-green-dark focus:outline-none my-1 w-full"
+                                onClick={() => {
+                                    axios.post(adminApi + "categoryInsert", {
+                                        name: categoryName,
+                                        parentId: parentCategory
+                                    })
+                                        .then(res => {
+                                            getCategories();
+                                            setCategoryName('');
+                                            setParentCategory(0);
+                                            setSelectedCategory(null);
+                                        })
+                                        .catch(err => {
+                                            console.log(err)
+                                        });
+                                }}>
+                                
                                 Add</button>}
 
                     </div>
