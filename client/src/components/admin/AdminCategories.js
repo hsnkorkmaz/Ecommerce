@@ -12,6 +12,8 @@ const AdminCategories = () => {
     const [categoryName, setCategoryName] = useState('');
 
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedCategoryHasChildren, setSelectedCategoryHasChildren] = useState(false);
+    const [selectedCategoryHasProducts, setSelectedCategoryHasProducts] = useState(false);
 
     const getCategories = () => {
         axios.get(categoryApi + "categories")
@@ -22,7 +24,6 @@ const AdminCategories = () => {
                 console.log(err)
             });
     }
-
 
     useEffect(() => {
         if (selectedCategory != null && selectedCategory != "0") {
@@ -37,12 +38,17 @@ const AdminCategories = () => {
                     else {
                         setParentCategory(0);
                     }
+                    setSelectedCategoryHasChildren(res.data.hasChildCategory);
+                    setSelectedCategoryHasProducts(res.data.hasProducts);
+
+
+
                 })
                 .catch(err => {
                     console.log(err)
                 });
 
-           
+
         }
     }, [selectedCategory]);
 
@@ -51,6 +57,14 @@ const AdminCategories = () => {
         getCategories();
     }, []);
 
+
+    const resetStates = () => {
+        setCategoryName('');
+        setParentCategory(0);
+        setSelectedCategory(null);
+        setSelectedCategoryHasChildren(false);
+        setSelectedCategoryHasProducts(false);
+    }
 
     return (
         <div>
@@ -93,9 +107,7 @@ const AdminCategories = () => {
                     <h1 className="text-2xl font-bold">{selectedCategory ? "Update Category" : "Add New Category"}</h1>
 
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => {
-                        setParentCategory(0);
-                        setCategoryName('');
-                        setSelectedCategory(null);
+                        resetStates();
                     }}>
                         Cancel
                     </button>
@@ -138,45 +150,45 @@ const AdminCategories = () => {
                         {selectedCategory
                             ? <div><button type="submit"
                                 className="text-center py-3 rounded bg-green-500 text-white hover:bg-green-dark focus:outline-none my-1 w-full"
-                                onClick = {() => {
+                                onClick={() => {
                                     axios.put(adminApi + "categoryUpdate", {
                                         id: selectedCategory,
                                         name: categoryName,
                                         parentId: parentCategory
                                     })
-                                    .then(res => {
-                                        getCategories();
-                                        setCategoryName('');
-                                        setParentCategory(0);
-                                        setSelectedCategory(null);
-                                    })
-                                    .catch(err => {
-                                        console.log(err)
-                                    });
-                                }}>
-                                Update</button>
-                                <button type="submit"
-                                    className="text-center py-3 rounded bg-red-500 text-white hover:bg-red-dark focus:outline-none my-1 w-full"
-                                    onClick={() => {
-                                        axios.delete(adminApi + "categoryDelete", {
-                                            params: {
-                                                id: selectedCategory
-                                            }
-                                        })
                                         .then(res => {
                                             getCategories();
-                                            setCategoryName('');
-                                            setParentCategory(0);
-                                            setSelectedCategory(null);
+                                            resetStates();
                                         })
                                         .catch(err => {
                                             console.log(err)
                                         });
-                                    }
-                                    }>
-                                    Delete</button>
-                                </div>
-                                
+                                }}>
+                                Update</button>
+
+                                {selectedCategoryHasChildren || selectedCategoryHasProducts ?
+                                    null
+                                    : <button type="submit"
+                                        className="text-center py-3 rounded bg-red-500 text-white hover:bg-red-dark focus:outline-none my-1 w-full"
+                                        onClick={() => {
+                                            axios.delete(adminApi + "categoryDelete", {
+                                                params: {
+                                                    id: selectedCategory
+                                                }
+                                            })
+                                                .then(res => {
+                                                    getCategories();
+                                                    resetStates();
+                                                })
+                                                .catch(err => {
+                                                    console.log(err)
+                                                });
+                                        }
+                                        }>
+                                        Delete</button>}
+
+                            </div>
+
 
                             : <button
                                 type="submit"
@@ -188,15 +200,13 @@ const AdminCategories = () => {
                                     })
                                         .then(res => {
                                             getCategories();
-                                            setCategoryName('');
-                                            setParentCategory(0);
-                                            setSelectedCategory(null);
+                                            resetStates();
                                         })
                                         .catch(err => {
                                             console.log(err)
                                         });
                                 }}>
-                                
+
                                 Add</button>}
 
                     </div>
