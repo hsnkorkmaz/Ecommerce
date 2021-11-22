@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos;
@@ -46,6 +48,23 @@ namespace api.Services
             _context.Categories.Update(category);
             category.Id = await _context.SaveChangesAsync();
             return category;
+        }
+
+        public async Task<int> DeleteCategory(int id)
+        {
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+            _context.Categories.Remove(category);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> HasProducts(int id)
+        {
+            return await _context.Products.AnyAsync(x => x.Categories.Contains(new Category() { Id = id }));
+        }
+
+        public async Task<bool> HasChildren(int id)
+        {
+            return await _context.Categories.AnyAsync(x => x.CategoryId == id);
         }
     }
 }

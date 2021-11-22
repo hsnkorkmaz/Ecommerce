@@ -13,5 +13,9 @@ namespace api.Interfaces
 
         Task<Category> InsertCategory(Category category);
         Task<Category> UpdateCategory(Category category);
+        Task<int> DeleteCategory(int id);
+        Task<bool> HasProducts(int id);
+        Task<bool> HasChildren(int id);
+
     }
 }

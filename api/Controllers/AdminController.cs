@@ -37,7 +37,9 @@ namespace api.Controllers
             {
                 Id = category.Id,
                 Name = category.Name,
-                ParentId = category.CategoryId
+                ParentId = category.CategoryId,
+                HasChildCategory = await _categoryService.HasChildren(category.Id),
+                HasProducts = await _categoryService.HasProducts(category.Id)
             };
 
             return Ok(categoryDto);
@@ -78,7 +80,15 @@ namespace api.Controllers
             };
 
             return Created("success", await _categoryService.UpdateCategory(newCategory));
+        }
 
+
+        [HttpDelete("categoryDelete")]
+        public async Task<ActionResult> CategoryDelete(int id)
+        {
+            var deleted = await _categoryService.DeleteCategory(id);
+
+            return Ok("success");
         }
     }
 }
