@@ -11,5 +11,7 @@ namespace api.Interfaces
     {
         Task<List<Product>> GetWithDto(ProductRequestDto requestDto);
         Task<Product> GetWithId(int id);
+        Task<Product> InsertProduct(Product product);
+        Task<Product> UpdateProduct(Product product);
     }
 }

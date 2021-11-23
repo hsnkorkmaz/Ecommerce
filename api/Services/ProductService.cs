@@ -75,7 +75,24 @@ namespace api.Services
 
         public async Task<Product> GetWithId(int id)
         {
-            return await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Products.Where(x => x.Id == id).Include(x=> x.Categories).FirstOrDefaultAsync();
         }
+
+
+        public async Task<Product> InsertProduct(Product product)
+        {
+            await _context.Products.AddAsync(product);
+            product.Id = await _context.SaveChangesAsync();
+            return product;
+        }
+
+        public async Task<Product> UpdateProduct(Product product)
+        {
+            _context.Entry(product).State = EntityState.Modified;
+            _context.Products.Update(product);
+            product.Id = await _context.SaveChangesAsync();
+            return product;
+        }
+
     }
 }
