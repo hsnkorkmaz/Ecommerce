@@ -10,7 +10,7 @@ namespace api.Interfaces
     {
         Task<List<Category>> GetAll();
         Task<Category> GetById(int id);
-
+        Task<List<Category>> GetAllByProductId(int productId);
         Task<Category> InsertCategory(Category category);
         Task<Category> UpdateCategory(Category category);
         Task<int> DeleteCategory(int id);

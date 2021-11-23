@@ -66,5 +66,10 @@ namespace api.Services
         {
             return await _context.Categories.AnyAsync(x => x.CategoryId == id);
         }
+
+        public async Task<List<Category>> GetAllByProductId(int productId)
+        {
+            return await _context.Categories.Where(x => x.Products.Contains(new Product() { Id = productId })).ToListAsync();
+        }
     }
 }
