@@ -5,6 +5,7 @@ import axios from 'axios';
 import CategoryOption from './CategoryOption';
 import CategoryItem from './CategoryItem';
 import AdminResultProductItem from './AdminResultProductItem';
+import ProductCategoryButton from './ProductCategoryButton';
 
 const AdminProducts = () => {
 
@@ -20,7 +21,8 @@ const AdminProducts = () => {
     const [imageName, setImageName] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
-
+    const [productCategories, setProductCategories] = useState([]);
+    const [addCategoryId, setAddCategoryId] = useState(0);
 
 
     const defaultRequestData = {
@@ -45,7 +47,7 @@ const AdminProducts = () => {
 
 
     const getCategories = () => {
-        axios.get(categoryApi + "categories")
+        axios.get(categoryApi + "categories",)
             .then(res => {
                 setSearchCategories(res.data)
             })
@@ -58,12 +60,45 @@ const AdminProducts = () => {
         getCategories();
     }, []);
 
+
+    useEffect(() => {
+        if (addCategoryId !== null && addCategoryId !== 0) {
+            let newProductCategories = [...productCategories];
+            
+            axios.get(adminApi + "categoryById",
+                { params: { id: addCategoryId } })
+                .then(res => {
+                    if (newProductCategories.find(productCategory => productCategory.id == addCategoryId)) {
+                        alert("Category is already added");
+                        setAddCategoryId(0);
+                        return;
+                    }
+                    newProductCategories.push(res.data);
+                    setProductCategories(newProductCategories);
+                    setAddCategoryId(0);
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+        }
+    }, [addCategoryId]);
+
+
     useEffect(() => {
         if (selectedProduct) {
             setProductName(selectedProduct.name);
             setImageName(selectedProduct.imageName);
             setPrice(selectedProduct.price);
             setDescription(selectedProduct.description);
+
+            axios.get(adminApi + "categoriesByProductId",
+                { params: { id: selectedProduct.id } })
+                .then(res => {
+                    setProductCategories(res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                });
         }
     }, [selectedProduct]);
 
@@ -93,6 +128,8 @@ const AdminProducts = () => {
         setImageName('');
         setPrice('');
         setDescription('');
+        setProductCategories([]);
+        setAddCategoryId(0);
         resetSearch();
     }
 
@@ -177,7 +214,7 @@ const AdminProducts = () => {
                     }
 
                 </div>
-                
+
                 <div className="ml-7 md:w-2/5">
                     <h1 className="text-2xl font-bold">{selectedProduct ? "Update Product" : "Add New Product"}</h1>
 
@@ -186,6 +223,47 @@ const AdminProducts = () => {
                     }}>
                         Cancel
                     </button>
+
+
+                    <div className="">
+                        <div>Add Category:</div>
+                        <div> <select className="block border border-grey-light p-3 rounded mb-4 w-full" value={addCategoryId}
+                            onChange={e => setAddCategoryId(e.target.value)}>
+                            <option value="0">Select Category to Add</option>
+                            {
+                                searchCategories?.map(category => {
+                                    return (
+                                        <>
+                                            <CategoryOption key={category.id} id={category.id} name={category.name} indent="-" />
+                                            {
+                                                category.childCategories?.map(childCategory => {
+                                                    return (
+                                                        <>
+                                                            <CategoryOption key={childCategory.id} id={childCategory.id} name={childCategory.name} indent="--" />
+                                                            {
+                                                                childCategory.childCategories?.map(grandChild => {
+                                                                    return (
+                                                                        <CategoryOption key={grandChild.id} id={grandChild.id} name={grandChild.name} indent="---" />
+                                                                    )
+                                                                })
+                                                            }
+                                                        </>
+                                                    )
+                                                })
+                                            }
+                                        </>
+                                    )
+                                })
+                            }
+                        </select>
+                        </div>
+                        <div>Product Categories</div>
+                        {productCategories?.map(category => {
+                            return <ProductCategoryButton key={category.id} id={category.id} name={category.name} productCategories={productCategories} setProductCategories={setProductCategories} />
+                        })
+                        }
+                    </div>
+
                     {imageName !== '' ?
                         <div className="flex relative bg-orange-500 justify-center items-center m-1 mr-2 w-36 h-36 mt-1 rounded-full">
                             <img alt={imageName} src={"https://assets.icanet.se/t_product_medium_v1,f_auto/" + imageName + ".jpg"} />
@@ -216,20 +294,23 @@ const AdminProducts = () => {
                     {selectedProduct
                         ? <div><button type="submit"
                             className="text-center py-3 rounded bg-green-500 text-white hover:bg-green-dark focus:outline-none my-1 w-full"
-                               /*  onClick={() => {
-                                    axios.put(adminApi + "categoryUpdate", {
-                                        id: selectedCategory,
-                                        name: categoryName,
-                                        parentId: parentCategory
+                            onClick={() => {
+                                axios.put(adminApi + "productUpdate", {
+                                    id: selectedProduct.id,
+                                    name: productName,
+                                    
+                                    imageName: imageName,
+                                    price: price,
+                                    description: description,
+                                    categories: productCategories.map(category => category.id)
+                                })
+                                    .then(res => {
+                                        resetStates();
                                     })
-                                        .then(res => {
-                                            getCategories();
-                                            resetStates();
-                                        })
-                                        .catch(err => {
-                                            console.log(err)
-                                        });
-                                }} */>
+                                    .catch(err => {
+                                        console.log(err)
+                                    });
+                            }}>
                             Update</button>
 
                             <button type="submit"
@@ -256,19 +337,21 @@ const AdminProducts = () => {
                         : <button
                             type="submit"
                             className="text-center py-3 rounded bg-green-500 text-white hover:bg-green-dark focus:outline-none my-1 w-full"
-                               /*  onClick={() => {
-                                    axios.post(adminApi + "categoryInsert", {
-                                        name: categoryName,
-                                        parentId: parentCategory
+                                 onClick={() => {
+                                    axios.post(adminApi + "productInsert", {
+                                        name: productName,
+                                        imageName: imageName,
+                                        price: price,
+                                        description: description,
+                                        categories: productCategories.map(category => category.id)
                                     })
                                         .then(res => {
-                                            getCategories();
                                             resetStates();
                                         })
                                         .catch(err => {
                                             console.log(err)
                                         });
-                                }} */>
+                                }}>
 
                             Add</button>}
 
