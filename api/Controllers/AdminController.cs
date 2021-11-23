@@ -48,6 +48,15 @@ namespace api.Controllers
         }
 
 
+        [HttpGet("categoriesByProductId")]
+        public async Task<ActionResult> CategoriesByProductId(int id)
+        {
+            var categories = await _categoryService.GetAllByProductId(id);
+            var categoriesDto = _mapper.Map<List<CategoryDto>>(categories);
+            return Ok(categoriesDto);
+        }
+
+
         [HttpPost("categoryInsert")]
         public async Task<ActionResult> CategoryInsert(AdminInsertCategoryDto dto)
         {
@@ -122,6 +131,65 @@ namespace api.Controllers
             var order = await _orderService.DeliverOrder(id);
             var orderDto = _mapper.Map<OrderDto>(order);
             return Ok(orderDto);
+        }
+
+
+        [HttpPost("productInsert")]
+        public async Task<ActionResult> ProductInsert(AdminInsertProductDto dto)
+        {
+
+            var dbProduct = new Product
+            {
+                Name = dto.Name,
+                ImageName = dto.ImageName,
+                Description = dto.Description,
+                Price = Convert.ToDecimal(dto.Price)
+            };
+            var categories = new List<Category>();
+
+
+
+
+            foreach (var categoryId in dto.Categories)
+            {
+                var dbCategory = await _categoryService.GetById(categoryId);
+                categories.Add(dbCategory);
+            }
+
+            dbProduct.Categories = categories;
+
+            await _productService.InsertProduct(dbProduct);
+
+            return Ok("success");
+
+        }
+
+        [HttpPut("productUpdate")]
+        public async Task<ActionResult> ProductUpdate(AdminUpdateProductDto dto)
+        {
+
+            var dbProduct = await _productService.GetWithId(dto.Id);
+
+            dbProduct.Name = dto.Name;
+            dbProduct.ImageName = dto.ImageName;
+            dbProduct.Description = dto.Description;
+            dbProduct.Price = Convert.ToDecimal(dto.Price);
+
+            var categories = new List<Category>();
+            
+            foreach (var categoryId in dto.Categories)
+            {
+                var dbCategory = await _categoryService.GetById(categoryId);
+                dbCategory.ChildCategories = null;
+                categories.Add(dbCategory);
+            }
+
+
+            dbProduct.Categories = categories;
+
+            await _productService.UpdateProduct(dbProduct);
+
+            return Ok("success");
         }
     }
 }
