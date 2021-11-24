@@ -15,3 +15,7 @@ Backend Tech Stack:
 - .NET Web Api
 - Entity Framework
 - SQL Server
+
+Screenshots:
+
+![alt text](https://github.com/hsnkorkmaz/Ecommerce/blob/master/main1.jpg?raw=true)
