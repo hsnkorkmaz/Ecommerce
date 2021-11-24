@@ -18,4 +18,4 @@ Backend Tech Stack:
 
 Screenshots:
 
-![alt text](https://github.com/hsnkorkmaz/Ecommerce/blob/master/main1.jpg?raw=true)
+![alt text](https://github.com/hsnkorkmaz/Ecommerce/blob/master/screenshots/main1.jpg?raw=true)
